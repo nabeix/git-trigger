@@ -3,16 +3,37 @@
 ## Usage
 
 ```
-npm install -g git-pull-trigger
+npm install -g git-trigger
 vi trigger.config.js
-git-pull-trigger ./trigger.config.js
+git-trigger ./trigger.config.js
+```
+
+```
+   USAGE
+
+     git-trigger start <config>
+
+   ARGUMENTS
+
+     <config>      Config file      required
+
+   OPTIONS
+
+     --pidfile <pidfile>      PID file      optional
+
+   GLOBAL OPTIONS
+
+     -h, --help         Display help
+     -V, --version      Display version
+     --no-color         Disable colors
+     --quiet            Quiet mode - only displays warn and error messages
+     -v, --verbose      Verbose mode - will also output debug messages
 ```
 
 trigger.config.js
 ```
 module.exports = {
   interval: 2 * 60 * 1000, // 2 min
-  log: "/var/log/git-pull-trigger.log",
   repositories: [
     {
       url: "git@github.com:nabeix/git-pull-trigger.git",
@@ -27,12 +48,6 @@ module.exports = {
     }
   ]
 }
-```
-
-### Run as daemon using pm2
-
-```
-npm install -g pm2
 ```
 
 ## License

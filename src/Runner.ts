@@ -30,7 +30,6 @@ export default class Runner {
     }
 
     private async run(): Promise<void> {
-        console.log("run");
         for (const repo of this.config.repositories) {
             try {
                 fs.statSync(repo.dir);
@@ -50,7 +49,6 @@ export default class Runner {
                     continue;
                 }
                 const changed = await git.remoteChanged(repo.branch, repo.dir);
-                console.log({changed});
                 for (const act of repo.actions) {
                     if (act.when === "changed" && !changed) {
                         continue;
