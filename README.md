@@ -1,4 +1,4 @@
-# git-pull-trigger
+# git-trigger
 
 ## Usage
 
@@ -36,9 +36,9 @@ module.exports = {
   interval: 2 * 60 * 1000, // 2 min
   repositories: [
     {
-      url: "git@github.com:nabeix/git-pull-trigger.git",
+      url: "git@github.com:nabeix/git-trigger.git",
       branch: "master",
-      dir: "/var/app/git-pull-trigger",
+      dir: "/var/app/git-trigger",
       actions: [
         {
           when: "changed",
@@ -49,6 +49,10 @@ module.exports = {
   ]
 }
 ```
+
+## Live config update
+
+`git-trigger` supports live config update by `SIGUSR1` signal.
 
 ## License
 
