@@ -41,6 +41,7 @@ module.exports = {
       dir: "/var/app/git-trigger",
       actions: [
         {
+          gitCmd: "pull",
           when: "changed",
           run: "npm i && npm run build && npm t"
         }

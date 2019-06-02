@@ -17,7 +17,6 @@ export async function remoteUrl(cwd: string): Promise<string> {
 export async function remoteChanged(branch: string, cwd: string): Promise<boolean> {
     const {stdout: remote} = await execa("git", ["ls-remote", "origin", "refs/heads/" + branch], {cwd});
     const {stdout: local} = await execa("git", ["rev-parse", "HEAD"], {cwd});
-    console.log({remote, local});
     return remote.indexOf(local) !== 0;
 }
 
