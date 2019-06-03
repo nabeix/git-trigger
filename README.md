@@ -53,6 +53,13 @@ module.exports = {
 }
 ```
 
+## Environment variables in command
+
+git-trigger assign the following environtment variables to a command in `run` parameter.
+
+- GIT_TRIGGER_COMMIT_HASH
+- GIT_TRIGGER_PREV_COMMIT_HASH
+
 ## Live config update
 
 `git-trigger` supports live config update by `SIGUSR1` signal.

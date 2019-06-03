@@ -1,6 +1,6 @@
 export interface ActionConfig {
-    gitCmd: string;
     when: "changed"|"always";
+    gitCmd?: string;
     run?: string;
 }
 
