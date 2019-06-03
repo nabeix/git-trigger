@@ -20,7 +20,7 @@ export async function remoteChanged(branch: string, cwd: string): Promise<[boole
         return stdout.split("\t")[0].split(" ")[0];
     })();
     const local = await commitHash(cwd);
-    return [remote === local, local, remote];
+    return [remote !== local, local, remote];
 }
 
 export async function exec(cmd: string, cwd: string): Promise<void> {
