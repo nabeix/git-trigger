@@ -1,6 +1,6 @@
 # git-trigger
 
-git-trigger monitors a git branch and trigger a command defined in config file when changesare detected.
+git-trigger monitors a git branch and trigger a command defined in config file when changes are detected.
 
 ## Usage
 
@@ -35,12 +35,12 @@ git-trigger ./trigger.config.js
 trigger.config.js
 ```
 module.exports = {
-  interval: 2 * 60 * 1000, // 2 min
+  interval: 2 * 60 * 1000, // check git branches in 2 min intervals
   repositories: [
     {
       url: "git@github.com:nabeix/git-trigger.git",
       branch: "master",
-      dir: "/var/app/git-trigger",
+      dir: "/var/app/git-trigger", // if directory is none, git-trigger clone the repository/branch automatically.
       actions: [
         {
           when: "changed", // trigger `gitCmd` and `run` when branch is changed
