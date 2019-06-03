@@ -1,5 +1,7 @@
 # git-trigger
 
+git-trigger monitors a git branch and trigger a command defined in config file when changesare detected.
+
 ## Usage
 
 ```
@@ -41,9 +43,9 @@ module.exports = {
       dir: "/var/app/git-trigger",
       actions: [
         {
-          gitCmd: "pull",
-          when: "changed",
-          run: "npm i && npm run build && npm t"
+          when: "changed", // trigger `gitCmd` and `run` when branch is changed
+          gitCmd: "pull", // run `git pull`
+          run: "npm i && npm run build && npm t" // running on /var/app/git-trigger
         }
       ]
     }
