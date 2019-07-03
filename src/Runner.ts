@@ -1,5 +1,5 @@
 import Timer from "./Timer";
-import { Config, RepositoryConfig } from "./Config";
+import { Config } from "./Config";
 import * as fs from "fs-extra";
 import * as git from "./git";
 import * as execa from "execa";
@@ -48,14 +48,20 @@ export default class Runner {
                     console.error("error: " + repo.dir + " is not " + repo.branch + " branch");
                     continue;
                 }
-                const changed = await git.remoteChanged(repo.branch, repo.dir);
+                const [changed, prevHash] = await git.remoteChanged(repo.branch, repo.dir);
                 for (const act of repo.actions) {
                     if (act.when === "changed" && !changed) {
                         continue;
                     }
-                    await git.exec(act.gitCmd, repo.dir);
+                    if (act.gitCmd) {
+                        await git.exec(act.gitCmd, repo.dir);
+                    }
                     if (act.run) {
-                        await execa.shell(act.run, {cwd: repo.dir});
+                        const commitHash = await git.commitHash(repo.dir);
+                        await execa.shell(act.run, {cwd: repo.dir, env: {
+                            GIT_TRIGGER_COMMIT_HASH: commitHash,
+                            GIT_TRIGGER_PREV_COMMIT_HASH: prevHash
+                        }});
                     }
                 }
                 console.log("success: " + JSON.stringify({url: repo.url, branch: repo.branch, dir: repo.dir}));

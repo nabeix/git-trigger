@@ -1,6 +1,6 @@
 # git-trigger
 
-git-trigger monitors a git branch and trigger a command defined in config file when changes are detected.
+git-trigger monitors a git branch and trigger a shell command defined in config file when changes are detected.
 
 ## Usage
 
@@ -52,6 +52,31 @@ module.exports = {
   ]
 }
 ```
+
+## Configuration parameters
+
+- interval: number
+  - intervals milliseconds for check git branches
+- repositories: Array
+   - url: string
+      - target git repository
+   - branch: string
+      - target branch name
+   - dir: string
+      - clone directory
+   - actions: Array
+      - when: "changed"|"always"
+      - gitCmd: string(optional)
+         - git sub command executed before `run` command
+      - run: string(optional)
+         - shell command
+
+## Environment variables in command
+
+git-trigger assigns the following environtment variables to a command in `run` parameter.
+
+- `GIT_TRIGGER_COMMIT_HASH`
+- `GIT_TRIGGER_PREV_COMMIT_HASH`
 
 ## Live config update
 

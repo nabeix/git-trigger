@@ -14,12 +14,20 @@ export async function remoteUrl(cwd: string): Promise<string> {
     return url;
 }
 
-export async function remoteChanged(branch: string, cwd: string): Promise<boolean> {
-    const {stdout: remote} = await execa("git", ["ls-remote", "origin", "refs/heads/" + branch], {cwd});
-    const {stdout: local} = await execa("git", ["rev-parse", "HEAD"], {cwd});
-    return remote.indexOf(local) !== 0;
+export async function remoteChanged(branch: string, cwd: string): Promise<[boolean, string, string]> {
+    const remote = await (async () => {
+        const {stdout} = await execa("git", ["ls-remote", "origin", "refs/heads/" + branch], {cwd});
+        return stdout.split("\t")[0].split(" ")[0];
+    })();
+    const local = await commitHash(cwd);
+    return [remote !== local, local, remote];
 }
 
 export async function exec(cmd: string, cwd: string): Promise<void> {
     await execa("git", cmd.split(" "), {cwd});
+}
+
+export async function commitHash(cwd: string): Promise<string> {
+    const { stdout } = await execa("git", ["rev-parse", "HEAD"], {cwd});
+    return stdout;
 }
